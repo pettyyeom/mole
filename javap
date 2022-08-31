@@ -1,0 +1,25 @@
+import java.util.LinkedList;
+
+public class HashTable {
+    class Node {
+    String key;
+    String value;
+    public Node(String key, String value)
+        this.key = key;
+        this.value = value;
+    }
+    String value() {
+        return value(); 
+    }
+    void value(String value) {
+        this.value = value;
+    Linked Node()
+} 
+
+public class test {
+   static void main(String args[]) {
+      
+
+      System.out.println();
+    }
+}
