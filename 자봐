@@ -1,0 +1,18 @@
+// 컬렉션 프레임워크
+
+
+    public class SetExam {
+        public static void main(String[] args) {
+           List<String> list = new ArrayList<> ();
+           list.add("kim");
+           list.add("kang");
+           list.add("kim");
+        }
+        
+        
+    }
+       
+      
+
+     
+}
