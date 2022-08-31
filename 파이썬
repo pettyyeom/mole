@@ -1,1 +1,31 @@
 
+import sys
+ 
+direction = [(0, -1), (0, 1), (-1, 0), (1, 0)]
+ 
+def calc(rst, table, m, n, p, q):
+  if p == m - 1 and q == n - 1:
+    rst[p][q] = 1
+    return
+  if rst[p][q] != -1:
+    return
+  rst[p][q] = 0
+  for dp, dq in direction:
+    np = p + dp
+    nq = q + dq
+    if 0 <= np < m and 0 <= nq < n:
+      if table[p][q] > table[np][nq]:
+        calc(rst, table, m, n, np, nq)
+        rst[p][q] += rst[np][nq]
+ 
+def solve():
+  m, n = map(int, sys.stdin.readline().rstrip().split())
+  table = []
+  for _ in range(m):
+    arr = list(map(int, sys.stdin.readline().rstrip().split()))
+    table.append(arr)
+  rst = [[-1] * n for _ in range(m)]
+  calc(rst, table, m, n, 0, 0)
+  print(rst[0][0])
+ 
+solve()
