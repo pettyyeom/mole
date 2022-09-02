@@ -1,0 +1,7 @@
+#b-u 방식
+def solve():
+    a,b = [int(x) for x in input().split()]
+solve()
+
+f(n) = 1 + min(f(n/3), f(n/2), f(n-1))
+
