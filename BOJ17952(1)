@@ -1,0 +1,19 @@
+import sys
+input = sys.stdin.readline
+
+t, r = [], 0 #초기화
+for _ in range(int(input())):
+    nt = list(map(int, input().split()))
+    if nt[0] == 1:
+        task.append((nt[1], nt[2]))
+    if task:
+        score, time = task.pop()
+        time -= 1
+        if time == 0:
+             result +=score
+        else:
+            task.append((score,time))
+    
+print(result)
+        
+    
