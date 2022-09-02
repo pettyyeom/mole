@@ -1,0 +1,2 @@
+1. lambda 식 연습
+set(map(lambda x: x**2, range(5)))
