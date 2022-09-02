@@ -1,0 +1,9 @@
+def solution(n):
+    answer = 0
+    if n < 2:
+        f(n) = 1
+    f(n) = f(n-2) + f(n-1)
+    
+    for i in range(n):
+        answer += (n % 1234567)
+    return answer
