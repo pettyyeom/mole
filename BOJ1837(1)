@@ -1,0 +1,25 @@
+def prime_number_eratos(N):
+    nums = [True] * (N + 1)
+    for i in range(2, len(nums) // 2 + 1):
+        if nums[i] == True:
+            for j in range(i+i, N, i):
+                nums[j] = False
+    return [i for i in range(2, N) if nums[i] == True]
+
+def make_password(P, K):
+    answer = "GOOD"
+    primary_number_list = prime_number_eratos(N=K)
+    
+    for prime_idx, prime_number in enumerate(primary_number_list):
+        if P % prime_number == 0:
+            answer = f"BAD {prime_number}"
+            break
+            
+    return answer
+    
+    
+if __name__ == "__main__":
+    P, K = map(int, input().split())
+    
+    print(make_password(P, K))
+출처: https://somjang.tistory.com/entry/BaekJoon-1837번-암호제작-Python?category=351755 [솜씨좋은장씨:티스토리]
