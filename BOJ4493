@@ -1,0 +1,44 @@
+def rock_scissors_paper(player1, player2, score_list):
+    if player1 == "R" and player2 == "P":
+        score_list[1] += 1
+    elif player1 == "P" and player2 == "R":
+        score_list[0] += 1
+    elif player1 == "S" and player2 == "P":
+        score_list[0] += 1
+    elif player1 == "P" and player2 == "S":
+        score_list[1] += 1
+    elif player1 == "S" and player2 == "R":
+        score_list[1] += 1
+    elif player1 == "R" and player2 == "S":
+        score_list[0] += 1
+    else:
+        score_list[0] += 1
+        score_list[1] += 1
+        
+    return score_list
+
+
+def match_result(score_list):
+    answer = "TIE"
+    
+    if score_list[0] > score_list[1]:
+        answer = "Player 1"
+    elif score_list[0] < score_list[1]:
+        answer = "Player 2"
+        
+    return answer
+        
+
+if __name__ == "__main__":
+    for _ in range(int(input())):
+        score_list = [0, 0]
+        
+        for _ in range(int(input())):
+            player1, player2 = map(str, input().split())
+            score_list = rock_scissors_paper(
+                player1=player1, player2=player2,
+                score_list=score_list
+            )
+            
+            
+        print(match_result(score_list=score_list))
