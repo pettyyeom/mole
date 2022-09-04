@@ -1,0 +1,27 @@
+import sys
+input = sys.stdin.readline
+
+n,m = map(int,input().split())
+dna = [input().rstrip() for _ in range(n)]
+acgt = {"A":0, "C":1, "G":2, "T":3}
+acgt_reverse = {0:"A", 1:"C", 2:"G", 3:"T"}
+ans = ""
+ans_sum = 0
+
+for i in range(m):
+    cnt = [0,0,0,0] // ACGT
+    for j in range(n):
+        cnt[acgt[dna[j][i]]] += 1
+    
+    min_idx = -1
+    max_cnt = 0
+    for idx in range(4):
+        if cnt[idx] == 0:
+            continue
+        if cnt[idx] > max_cnt:
+            max_cnt = cnt[idx]
+            min_idx = idx
+            
+    ans += acgt_reverse[min_idx]
+    ans_sum += n-max_cnt
+print(ans, ans_sum, sep="\n")
