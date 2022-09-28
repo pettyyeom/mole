@@ -1,0 +1,18 @@
+import sys
+...
+
+n,m,k = map(int,input().split())
+arr = [0] * (n+1)
+tree = [0] * (n+1)
+
+def prefix_sum(i):
+result = 0
+while i > 0:
+result += tree[i]
+i -= (i&-i)
+return result
+
+def update(i,dif):
+while i <= n:
+tree[i] += dif
+i+= (i & -i)
