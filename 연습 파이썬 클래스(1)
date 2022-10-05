@@ -1,0 +1,15 @@
+Class Student:
+def_init_(self, x, y):
+self.name = x
+self.id = y
+
+def get_name(self):
+return self.name
+
+def ger_id(self):
+return self.id
+
+best = Student('John Doe', 20170260)
+print(best.get_name(), end = ', ')
+print(best.get_id)
+
