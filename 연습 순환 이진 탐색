@@ -1,0 +1,16 @@
+DEF BINARY_SEARCH(a, left, right, K):
+if right >= left:
+mid = (left + right) // 2
+if a[mid] == K:
+return true
+elif a[mid] > K:
+return BINARY_SEARCH(a, left, mid -1, K)
+else:
+return BINARY_SEARCH(a, left, mid + 1, right, K)
+else:
+return False
+
+input_list = [10,20,30,40]
+n = len(input_list)
+print('55 탐색:', BINARY_SEARCH(input_list, 0, n-1, 55))
+print('50 탐색:', BINARY_SEARCH(input_list, 0, n-1, 50))
