@@ -1,0 +1,43 @@
+const MongoClient = require('mongodb').MongoClient;
+
+// MongoDB 연결 정보
+const url = 'mongodb://localhost:27017'; // MongoDB 서버 주소
+const dbName = 'mydatabase'; // 데이터베이스 이름
+
+// MongoDB 클라이언트 생성
+MongoClient.connect(url, { useUnifiedTopology: true }, (err, client) => {
+  if (err) {
+    console.error('MongoDB 연결 실패:', err);
+    return;
+  }
+
+  console.log('MongoDB 연결 성공!');
+
+  // 데이터베이스 및 컬렉션 선택
+  const db = client.db(dbName);
+  const collection = db.collection('mycollection');
+
+  // 여기서부터 데이터베이스 작업 수행
+
+  // 새로운 문서 삽입
+  const document = { name: 'John', age: 30 };
+  collection.insertOne(document, (err, result) => {
+    if (err) {
+      console.error('데이터 삽입 실패:', err);
+    } else {
+      console.log('데이터 삽입 성공!');
+    }
+  });
+
+  // 데이터 조회
+  collection.find({ name: 'John' }).toArray((err, docs) => {
+    if (err) {
+      console.error('데이터 조회 실패:', err);
+    } else {
+      console.log('조회된 데이터:', docs);
+    }
+  });
+
+  // 연결 종료
+  client.close();
+});
