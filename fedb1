@@ -1,0 +1,61 @@
+const MongoClient = require('mongodb').MongoClient;
+
+const url = 'mongodb://localhost:27017'; // MongoDB 서버 주소
+const dbName = 'mydatabase'; // 데이터베이스 이름
+const collectionName = 'mycollection'; // 컬렉션 이름
+
+// MongoDB 클라이언트 생성 및 연결
+MongoClient.connect(url, { useUnifiedTopology: true }, (err, client) => {
+  if (err) {
+    console.error('MongoDB 연결 실패:', err);
+    return;
+  }
+
+  console.log('MongoDB 연결 성공!');
+
+  const db = client.db(dbName);
+  const collection = db.collection(collectionName);
+
+  // Create (추가) 작업
+  const newDocument = { name: 'John', age: 30 };
+  collection.insertOne(newDocument, (err, result) => {
+    if (err) {
+      console.error('데이터 추가 실패:', err);
+    } else {
+      console.log('데이터 추가 성공!');
+    }
+  });
+
+  // Read (조회) 작업
+  collection.find({ name: 'John' }).toArray((err, docs) => {
+    if (err) {
+      console.error('데이터 조회 실패:', err);
+    } else {
+      console.log('조회된 데이터:', docs);
+    }
+  });
+
+  // Update (수정) 작업
+  const filter = { name: 'John' };
+  const update = { $set: { age: 31 } };
+  collection.updateOne(filter, update, (err, result) => {
+    if (err) {
+      console.error('데이터 업데이트 실패:', err);
+    } else {
+      console.log('데이터 업데이트 성공!');
+    }
+  });
+
+  // Delete (삭제) 작업
+  const deleteFilter = { name: 'John' };
+  collection.deleteOne(deleteFilter, (err, result) => {
+    if (err) {
+      console.error('데이터 삭제 실패:', err);
+    } else {
+      console.log('데이터 삭제 성공!');
+    }
+  });
+
+  // 연결 종료
+  client.close();
+});
