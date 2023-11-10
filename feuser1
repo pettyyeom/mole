@@ -1,0 +1,39 @@
+const express = require('express');
+const MongoClient = require('mongodb').MongoClient;
+
+const app = express();
+const port = 3000;
+
+const url = 'mongodb://localhost:27017'; // MongoDB 서버 주소
+const dbName = 'mydatabase'; // 데이터베이스 이름
+const collectionName = 'mycollection'; // 컬렉션 이름
+
+// MongoDB 클라이언트 생성 및 연결
+MongoClient.connect(url, { useUnifiedTopology: true }, (err, client) => {
+  if (err) {
+    console.error('MongoDB 연결 실패:', err);
+    return;
+  }
+
+  const db = client.db(dbName);
+  const collection = db.collection(collectionName);
+
+  // 사용자 검색 API 엔드포인트
+  app.get('/search', (req, res) => {
+    const searchTerm = req.query.q; // 사용자가 입력한 검색어
+
+    // 데이터베이스에서 검색
+    collection.find({ name: { $regex: new RegExp(searchTerm, 'i') } }).toArray((err, result) => {
+      if (err) {
+        console.error('검색 실패:', err);
+        res.status(500).json({ error: '검색 실패' });
+      } else {
+        res.json(result);
+      }
+    });
+  });
+
+  app.listen(port, () => {
+    console.log(`서버가 http://localhost:${port} 에서 실행 중입니다.`);
+  });
+});
