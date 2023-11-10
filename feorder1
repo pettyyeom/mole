@@ -1,0 +1,55 @@
+const express = require('express');
+const MongoClient = require('mongodb').MongoClient;
+const bodyParser = require('body-parser');
+
+const app = express();
+const port = 3000;
+
+const url = 'mongodb://localhost:27017'; // MongoDB 서버 주소
+const dbName = 'mydatabase'; // 데이터베이스 이름
+const collectionName = 'orders'; // 주문 컬렉션 이름
+
+// MongoDB 클라이언트 생성 및 연결
+MongoClient.connect(url, { useUnifiedTopology: true }, (err, client) => {
+  if (err) {
+    console.error('MongoDB 연결 실패:', err);
+    return;
+  }
+
+  const db = client.db(dbName);
+  const collection = db.collection(collectionName);
+
+  app.use(bodyParser.json());
+
+  // 주문 생성 API 엔드포인트
+  app.post('/order', (req, res) => {
+    const orderData = req.body; // POST 요청의 본문으로부터 주문 정보를 가져옵니다.
+
+    // 주문 데이터를 데이터베이스에 삽입
+    collection.insertOne(orderData, (err, result) => {
+      if (err) {
+        console.error('주문 생성 실패:', err);
+        res.status(500).json({ error: '주문 생성 실패' });
+      } else {
+        res.json({ message: '주문이 생성되었습니다.' });
+      }
+    });
+  });
+
+  // 주문 조회 API 엔드포인트
+  app.get('/orders', (req, res) => {
+    // 데이터베이스에서 모든 주문 조회
+    collection.find({}).toArray((err, orders) => {
+      if (err) {
+        console.error('주문 조회 실패:', err);
+        res.status(500).json({ error: '주문 조회 실패' });
+      } else {
+        res.json(orders);
+      }
+    });
+  });
+
+  app.listen(port, () => {
+    console.log(`서버가 http://localhost:${port} 에서 실행 중입니다.`);
+  });
+});
