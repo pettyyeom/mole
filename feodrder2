@@ -1,0 +1,19 @@
+// 주문 상태 업데이트 API 엔드포인트
+app.put('/order/:orderId', (req, res) => {
+  const orderId = req.params.orderId;
+  const newStatus = req.body.status; // 새로운 상태 정보를 요청 본문에서 가져옵니다.
+
+  // 데이터베이스에서 해당 주문을 찾아 상태 업데이트
+  collection.updateOne(
+    { _id: ObjectId(orderId) },
+    { $set: { status: newStatus } },
+    (err, result) => {
+      if (err) {
+        console.error('주문 상태 업데이트 실패:', err);
+        res.status(500).json({ error: '주문 상태 업데이트 실패' });
+      } else {
+        res.json({ message: '주문 상태가 업데이트되었습니다.' });
+      }
+    }
+  );
+});
