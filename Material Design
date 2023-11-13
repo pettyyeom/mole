@@ -1,0 +1,16 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(
+    MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text('Material Design 앱'),
+        ),
+        body: Center(
+          child: Text('안녕, Material Design!'),
+        ),
+      ),
+    ),
+  );
+}
