@@ -1,0 +1,16 @@
+import 'package:flutter/cupertino.dart';
+
+void main() {
+  runApp(
+    CupertinoApp(
+      home: CupertinoPageScaffold(
+        navigationBar: CupertinoNavigationBar(
+          middle: Text('Cupertino Design 앱'),
+        ),
+        child: Center(
+          child: Text('안녕, Cupertino Design!'),
+        ),
+      ),
+    ),
+  );
+}
