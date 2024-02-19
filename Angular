@@ -1,0 +1,71 @@
+https://www.patreon.com/posts/my-angluar-98731018?utm_medium=clipboard_copy&utm_source=copyLink&utm_campaign=postshare_creator&utm_content=join_link
+
+`npm install -g @angular/cli`
+
+`ng new my-app`
+
+`cd my-app`
+
+`ng serve --open`
+
+@Component({
+
+  selector: 'app-root',
+
+  templateUrl: './app.component.html',
+
+  styleUrls: ['./app.component.css']
+
+})
+
+export class AppComponent {
+
+  title = 'Ogbonna Vitalis, Welcome to Angular';
+
+}`npm install -g @angular/cli`
+
+`ng new my-app`
+
+`cd my-app`
+
+`ng serve --open`
+
+@Component({
+
+  selector: 'app-root',
+
+  templateUrl: './app.component.html',
+
+  styleUrls: ['./app.component.css']
+
+})
+
+export class AppComponent {
+
+  title = 'Ogbonna Vitalis, Welcome to Angular';
+
+}
+
+src/app/app.component.css
+
+content_copyh1 {
+
+  color: #369;
+
+  font-family: Arial, Helvetica, sans-serif;
+
+  font-size: 250%;
+
+}
+
+src/app/app.component.css
+
+content_copyh1 {
+
+  color: #369;
+
+  font-family: Arial, Helvetica, sans-serif;
+
+  font-size: 250%;
+
+}
