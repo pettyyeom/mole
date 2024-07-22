@@ -1,0 +1,19 @@
+@SpringBootApplication
+public class VueSpringbootInicisApplication {
+public static void main(String[] args) {
+SpringApplication.run(VueSpringbootInicisApplication.class, args);
+}
+
+@Repository 
+public class PayRepository {
+public Map<String, OrderData> m = new HashMap<>( );
+public void saveOrder(String orderNumber, long timestamp, String signature, int price) {
+this.m.put(orderNumber, new OrderData(timestamp, signature, price));
+}
+
+public OrderData getOrder(String orderNumber) {
+return this.m.get(orderNumber)'
+}
+}
+
+
