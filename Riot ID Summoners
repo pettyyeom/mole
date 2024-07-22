@@ -1,0 +1,27 @@
+public class MainActivity extends AppCompatActivity {
+
+    private ImageView imageView;
+    private ImageDownloader imageDownloader;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        imageView = findViewById(R.id.imageView);
+        imageDownloader = new ImageDownloader();
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                imageDownloader.downloadSummonersIcon("1234"); // 소환사 아이콘 ID를 여기에 입력
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        imageView.setImageBitmap(imageDownloader.getSummoners_bitmap());
+                    }
+                });
+            }
+        }).start();
+    }
+}
