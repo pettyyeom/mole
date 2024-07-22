@@ -1,0 +1,69 @@
+using UnityEngine;
+using System.Collections.Generic;
+using System;
+using Firebase.Auth;
+using AppleAuth;
+using AppleAuth.Native;
+using AppleAuth.Enums;
+using AppleAuth.Extensions;
+using System.Text;
+using System.Security.Cryptography;
+using AppleAuth.Interfaces;
+
+public class AuthManager : MonoBehaviour
+{
+    private FirebaseAuth auth;
+    
+    private void Start()
+    {
+        // Firebase 인증 초기화
+        auth = FirebaseAuth.DefaultInstance;
+    }
+
+    public void SignInWithApple()
+    {
+        if (AppleAuthManager.IsCurrentPlatformSupported)
+        {
+            var loginArgs = new AppleAuthLoginArgs(LoginOptions.IncludeEmail | LoginOptions.IncludeFullName);
+            AppleAuthManager.Instance.LoginWithAppleId(loginArgs, credential =>
+            {
+                // Apple ID 로그인 성공
+                var appleIdCredential = credential as IAppleIDCredential;
+                if (appleIdCredential != null)
+                {
+                    var identityToken = Encoding.UTF8.GetString(appleIdCredential.IdentityToken, 0, appleIdCredential.IdentityToken.Length);
+                    SignInWithFirebase(identityToken);
+                }
+            }, error =>
+            {
+                // Apple ID 로그인 실패
+                Debug.LogError("Apple ID 로그인 실패: " + error);
+            });
+        }
+        else
+        {
+            Debug.LogError("Apple ID 로그인은 현재 플랫폼에서 지원되지 않습니다.");
+        }
+    }
+
+    private void SignInWithFirebase(string idToken)
+    {
+        var credential = OAuthProvider.GetCredential("apple.com", idToken, null, null);
+        auth.SignInWithCredentialAsync(credential).ContinueWith(task =>
+        {
+            if (task.IsCanceled)
+            {
+                Debug.LogError("Firebase 로그인 취소됨.");
+                return;
+            }
+            if (task.IsFaulted)
+            {
+                Debug.LogError("Firebase 로그인 오류: " + task.Exception);
+                return;
+            }
+
+            FirebaseUser newUser = task.Result;
+            Debug.LogFormat("Firebase 사용자 로그인 성공: {0} ({1})", newUser.DisplayName, newUser.UserId);
+        });
+    }
+}
